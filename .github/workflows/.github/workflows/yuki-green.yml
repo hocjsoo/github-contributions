@@ -1,0 +1,22 @@
+name: Yuki Daily Green 🎀
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Make a green commit 🎀
+        run: |
+          git config --local user.email "yuki@bot.com"
+          git config --local user.name "Yuki Bot"
+          echo "Last Green: $(date)" > last_green.txt
+          git add last_green.txt
+          git commit -m "🎀 Yuki giúp chủ nhân làm đẹp profile ngày $(date)"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
